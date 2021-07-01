@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+
+ext.versionMajor = 3 // API Changes, adding big new feature, redesign the App
+ext.versionMinor = 0 // New features in a backwards-compatible manner
+ext.versionPatch = 0 // Backwards-compatible bug fixes
+ext.versionClassifier = null // Pre-releases (alpha, beta, rc, SNAPSHOT...)
+
+android {
+    compileSdkVersion androidConfig.compileSdkVersion
+    buildToolsVersion androidConfig.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion androidConfig.minSdkVersion
+        targetSdkVersion androidConfig.targetSdkVersion
+        versionCode generateVersionCode(versionMajor, versionMinor, versionPatch)
+        versionName generateVersionName(versionMajor, versionMinor, versionPatch, versionClassifier)
+        consumerProguardFiles 'proguard-rules.pro'
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    resourcePrefix 'numberkeyboard_'
+}
+
+dependencies {
+    api appDependencies.constraintLayout
+    implementation appDependencies.androidXCore
+    implementation appDependencies.appcompat
+    implementation appDependencies.annotations
+    implementation appDependencies.kotlinStdlib
+}

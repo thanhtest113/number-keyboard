@@ -1,0 +1,35 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+
+ext.versionMajor = 1 // API Changes, adding big new feature, redesign the App
+ext.versionMinor = 0 // New features in a backwards-compatible manner
+ext.versionPatch = 0 // Backwards-compatible bug fixes
+ext.versionClassifier = null // Pre-releases (alpha, beta, rc, SNAPSHOT...)
+
+android {
+    compileSdkVersion androidConfig.compileSdkVersion
+    buildToolsVersion androidConfig.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.davidmiguel.numberkeyboard.sample"
+        minSdkVersion androidConfig.minSdkVersion
+        targetSdkVersion androidConfig.targetSdkVersion
+        versionCode generateVersionCode(versionMajor, versionMinor, versionPatch)
+        versionName generateVersionName(versionMajor, versionMinor, versionPatch, versionClassifier)
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation project(':lib')
+    implementation appDependencies.androidXCore
+    implementation appDependencies.appcompat
+    implementation appDependencies.kotlinStdlib
+}
